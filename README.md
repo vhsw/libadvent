@@ -1,4 +1,4 @@
-# Advent of Code
+# libadvent
 
 Helper library for [Advent of Code](https://adventofcode.com) :christmas_tree:
 
