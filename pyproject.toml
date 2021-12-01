@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "libadvent"
+version = "2021.12.1"
+description = "Helper library for Advent of Code"
+license = "MIT"
+authors = ["Alexey Dubrov <vhsw@ya.ru>"]
+
+[tool.poetry.scripts]
+download = "libadvent.download:cli"
+update_stats = "libadvent.statistics:update_stats"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+click = "^8.0.3"
+requests = "^2.26.0"
+python-dotenv = "^0.19.2"
+beautifulsoup4 = { extras = ["lxml"], version = "^4.10.0" }
+
+[tool.poetry.dev-dependencies]
+black = "^21.11b1"
+flake8 = "^4.0.1"
+mypy = "^0.910"
+pylint = "^2.12.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.pylint]
+[tool.pylint.basic]
+good-names = ["fp"]
