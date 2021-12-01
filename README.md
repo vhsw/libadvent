@@ -10,14 +10,13 @@ Install the package with:
 poetry install
 ```
 
-Set `SESSION` env var to your session cookie from [Advent of Code](https://adventofcode.com).
-`.env` file is also supported.
+Set `AOC_SESSION` environment variable to your session cookie from [Advent of Code](https://adventofcode.com) (`.env` file is also supported).
 
 `download` will scrape your puzzle input and create a template file for answers.
 Example:
 
 ```console
-download 2020-12-25
+download 2021-12-25
 ```
 
 Without args, `download` will scrape puzzle input for today.
