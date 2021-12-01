@@ -13,10 +13,11 @@ from . import session, templates
 
 
 def download(date: datetime):
-    directory = create_dir(date)
     task = download_task(date)
     title = get_title(task)
     module = sanitize(title)
+    directory = f"{date.year}/Day {date.day:02d}"
+    makedirs(directory)
     input_path = f"{directory}/input.txt"
     with open(f"{directory}/{module}.py", "w", encoding="utf-8") as fp:
         fp.write(
@@ -32,12 +33,6 @@ def download(date: datetime):
         )
     with open(input_path, "w", encoding="utf-8") as fp:
         fp.write(download_input(date))
-
-
-def create_dir(date: datetime) -> str:
-    directory = f"{date.year}/Day {date.day:02d}"
-    makedirs(directory)
-    return directory
 
 
 def download_task(date: datetime) -> str:
