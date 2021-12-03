@@ -6,15 +6,15 @@ def test_part1():
     """Part 1 test"""
     example = """
 
-""".strip().splitlines()
+""".strip()
     assert part1(example) == 0
-    # assert part1(DATA) == 0
+    assert part1(DATA) == 0
 
 
 def test_part2():
     """Part 2 test"""
     example = """
 
-""".strip().splitlines()
+""".strip()
     assert part2(example) == 0
-    # assert part2(DATA) == 0
+    assert part2(DATA) == 0
