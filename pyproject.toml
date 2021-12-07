@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "libadvent"
-version = "2021.12.3"
+version = "2021.12.7"
 description = "Helper library for Advent of Code"
 license = "MIT"
 authors = ["Alexey Dubrov <vhsw@ya.ru>"]
