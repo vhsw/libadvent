@@ -16,14 +16,13 @@ def main():
     total = 0
     for element in stats:
         line = element.get_text()
-        year, stars = re.match(r"\[(\d{4})\] +(\d+)", line).groups()
+        year, stars = re.match(r"\[(\d{4})\] +(\d+)?", line).groups()
         if not stars:
             stars = 0
         stars = int(stars)
         total += stars
         badge = ":star2:" if stars == 50 else ":star:"
         text += f"- {year}: {stars:02d} {badge}\n"
-
     text += f"\nTotal stars: {total} :star:\n"
     with open("README.md", encoding="utf-8") as fp:
         data = fp.read()

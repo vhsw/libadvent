@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from libadvent import session
 
+
 def main():
     """Console handler"""
     parser = argparse.ArgumentParser(

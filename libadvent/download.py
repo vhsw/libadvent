@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 from libadvent import session, templates
 
+
 def main():
     """Console handler"""
     parser = argparse.ArgumentParser(description="Download task from Advent of Code")
