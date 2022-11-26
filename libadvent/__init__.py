@@ -1,5 +1,5 @@
 """Helper library for Advent of Code"""
-from os import environ, getenv
+from os import getenv
 
 import requests
 from dotenv import load_dotenv

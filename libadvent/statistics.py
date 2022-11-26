@@ -1,14 +1,12 @@
-#!/usr/bin/env python3
 """Update stats section in README.md"""
-
 import re
 
 from bs4 import BeautifulSoup
 
-from . import session
+from libadvent import session
 
 
-def update_stats():
+def main():
     """Fetch star counters and update README"""
     url = "https://adventofcode.com/events"
     req = session.get(url)
@@ -32,7 +30,3 @@ def update_stats():
         head, _ = data.rsplit("## Statistics", 1)
     with open("README.md", "w", encoding="utf-8") as fp:
         fp.write(head + text)
-
-
-if __name__ == "__main__":
-    update_stats()

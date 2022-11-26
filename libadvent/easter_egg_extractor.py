@@ -1,26 +1,12 @@
-#!/usr/bin/env python3
 """Easter Eggs extractor"""
 import argparse
 from datetime import datetime
 
 from bs4 import BeautifulSoup
 
-from . import session
+from libadvent import session
 
-
-def download(date: datetime):
-    url = f"https://adventofcode.com/{date.year}/day/{date.day}"
-    req = session.get(url)
-    soup = BeautifulSoup(req.text, "lxml")
-    for p in soup.select("p"):
-        for span in p.select("span"):
-            text = span.get("title")
-            if text:
-                span.replace_with(f"{span.get_text()} (egg: {text})")
-                print(p.get_text())
-
-
-def cli():
+def main():
     """Console handler"""
     parser = argparse.ArgumentParser(
         description="Download Easter Eggs from Advent of Code"
@@ -33,8 +19,15 @@ def cli():
         help="date in format YYYY-mm-dd",
     )
     args = parser.parse_args()
-    download(args.date)
+    _download(args.date)
 
 
-if __name__ == "__main__":
-    cli()
+def _download(date: datetime):
+    url = f"https://adventofcode.com/{date.year}/day/{date.day}"
+    req = session.get(url)
+    soup = BeautifulSoup(req.text, "lxml")
+    for p_tag in soup.select("p"):
+        for span in p_tag.select("span"):
+            if text := span.get("title"):
+                span.replace_with(f"{span.get_text()} (egg: {text})")
+                print(p_tag.get_text())

@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
 """Download input data and create answer template"""
-
 import argparse
 import importlib
 import re
@@ -9,13 +7,26 @@ from os import makedirs
 
 from bs4 import BeautifulSoup
 
-from . import session, templates
+from libadvent import session, templates
+
+def main():
+    """Console handler"""
+    parser = argparse.ArgumentParser(description="Download task from Advent of Code")
+    parser.add_argument(
+        "date",
+        type=lambda v: datetime.strptime(v, "%Y-%m-%d"),
+        default=datetime.now(),
+        nargs="?",
+        help="date in format YYYY-mm-dd",
+    )
+    args = parser.parse_args()
+    _download(args.date)
 
 
-def download(date: datetime):
-    task = download_task(date)
-    title = get_title(task)
-    module = sanitize(title)
+def _download(date: datetime):
+    task = _download_task(date)
+    title = _get_title(task)
+    module = _sanitize(title)
     directory = f"{date.year}/Day {date.day:02d}"
     makedirs(directory)
     input_path = f"{directory}/input.txt"
@@ -32,48 +43,30 @@ def download(date: datetime):
             )
         )
     with open(input_path, "w", encoding="utf-8") as fp:
-        fp.write(download_input(date))
+        fp.write(_download_input(date))
 
 
-def download_task(date: datetime) -> str:
+def _download_task(date: datetime) -> str:
     url = f"https://adventofcode.com/{date.year}/day/{date.day}"
     response = session.get(url)
     response.raise_for_status()
     return response.text
 
 
-def download_input(date: datetime) -> str:
+def _download_input(date: datetime) -> str:
     url = f"https://adventofcode.com/{date.year}/day/{date.day}/input"
     response = session.get(url)
     response.raise_for_status()
     return response.text
 
 
-def get_title(task: str) -> str:
+def _get_title(task: str) -> str:
     soup = BeautifulSoup(task, "lxml")
     header = soup.select_one("body > main > article > h2").get_text()
     if match := re.match(r"--- Day \d+: (.+) ---", header):
-        return match.group(1)
+        return match[1]
     raise ValueError(f"{header=} is not valid")
 
 
-def sanitize(title: str) -> str:
+def _sanitize(title: str) -> str:
     return re.sub(r"\W+", "_", title).lower().strip("_")
-
-
-def cli():
-    """Console handler"""
-    parser = argparse.ArgumentParser(description="Download task from Advent of Code")
-    parser.add_argument(
-        "date",
-        type=lambda v: datetime.strptime(v, "%Y-%m-%d"),
-        default=datetime.now(),
-        nargs="?",
-        help="date in format YYYY-mm-dd",
-    )
-    args = parser.parse_args()
-    download(args.date)
-
-
-if __name__ == "__main__":
-    cli()
